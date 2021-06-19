@@ -21,27 +21,28 @@
     </div>
 
     <script>
+        
         navigator.getBattery().then(battery => {
+            var percetage = document.querySelector(".percetage");
+            var percent = document.querySelector(".percent");
+            var isCharging = document.querySelector(".isCharging");
 
-            let percentage = document.querySelector(".percentage");
-            let percent = document.querySelector(".percent");
-            let isCharging = document.querySelector(".isCharging");
-
-            function updateAllBatteryInfo(){
+            function updateAllBatteryInfo() {
                 updateLevelInfo()
                 updateChargeInfo()
             }
+
             updateAllBatteryInfo()
-            
+
             function updateLevelInfo(){
-                percentage.style.width = battery.level * 100 + '%';
-                percent.innerHTML = battery.level * 100 + '%';
+                percetage.style.width = battery.level * 100 + '%';
+                percent.innerHTML = Math.floor(battery.level * 100) + '%';
             }
 
             function updateChargeInfo(){
-                isCharging.innerHTML = battery.charging ? "Your device charging" : "";
+                isCharging.innerHTML = battery.charging ? "Your device charging" : ""
             }
-            
+
             battery.addEventListener('levelchange', () => {
                 updateLevelInfo()
             })
@@ -49,7 +50,9 @@
             battery.addEventListener('chargingchange', () => {
                 updateChargeInfo()
             })
+
         })
+    
     </script>
 </body>
 </html>
