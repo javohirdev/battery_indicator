@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Battery indicator | JavaScript</title>
+</head>
+<body>
+    <div class="section">
+        <div class="card">
+            <div class="batteryShape">
+                <div class="batteryBorder">
+                    <div class="percentage"></div>
+                </div>
+                <div class="percent"></div>
+                <p class="isCharging"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        navigator.getBattery().then(battery => {
+
+            let percentage = document.querySelector(".percentage");
+            let percent = document.querySelector(".percent");
+            let isCharging = document.querySelector(".isCharging");
+
+            function updateAllBatteryInfo(){
+                updateLevelInfo()
+                updateChargeInfo()
+            }
+            updateAllBatteryInfo()
+            
+            function updateLevelInfo(){
+                percentage.style.width = battery.level * 100 + '%';
+                percent.innerHTML = battery.level * 100 + '%';
+            }
+
+            function updateChargeInfo(){
+                isCharging.innerHTML = battery.charging ? "Your device charging" : "";
+            }
+            
+            battery.addEventListener('levelchange', () => {
+                updateLevelInfo()
+            })
+
+            battery.addEventListener('chargingchange', () => {
+                updateChargeInfo()
+            })
+        })
+    </script>
+</body>
+</html>
